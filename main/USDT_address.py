@@ -1,53 +1,42 @@
 from bip_utils import Bip39SeedGenerator, Bip44, Bip44Coins, Bip44Changes
-
+from mnemonic import Mnemonic
 # 24个助记词
-mnemonic_words = "catch shrimp dream peasant stumble unusual pledge pumpkin also unhappy victory slab nose athlete unknown tower grief kitchen jump actor float dog tag kid"
-
-# 生成种子
-seed_bytes = Bip39SeedGenerator(mnemonic_words).Generate()
-
-# 生成BIP44对象
-bip_obj_btc = Bip44.FromSeed(seed_bytes, Bip44Coins.BITCOIN)
-bip_obj_eth = Bip44.FromSeed(seed_bytes, Bip44Coins.ETHEREUM)
-
-# 生成私钥
-private_key_btc = bip_obj_btc.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0).PrivateKey()
-private_key_eth = bip_obj_eth.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0).PrivateKey()
-
-print("BTC Private Key (for Omni USDT):", private_key_btc.ToWif())
-print("ETH Private Key (for ERC20 USDT):", private_key_eth.ToWif())
-
-# 生成比特币地址和以太坊地址
-btc_address = bip_obj_btc.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0).PublicKey().ToAddress()
-eth_address = bip_obj_eth.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0).PublicKey().ToAddress()
-
-print("BTC Address (for Omni USDT):", btc_address)
-print("ETH Address (for ERC20 USDT):", eth_address)
-
-
-
-
+from main.BTC_address import BTC_addr
+from main.ETH_address import ETH_addr
 
 from bip_utils import Bip39SeedGenerator, Bip44, Bip44Coins, Bip44Changes
 
-# 24个助记词
-mnemonic_words = "catch shrimp dream peasant stumble unusual pledge pumpkin also unhappy victory slab nose athlete unknown tower grief kitchen jump actor float dog tag kid"
+class TRON_addr():
+    def __init__(self,length,memo = None,lang = 'english'):
+        self.length = length
+        self.mnemonic = Mnemonic(lang)
+        self.memo = memo
 
-# 生成种子
-seed_bytes = Bip39SeedGenerator(mnemonic_words).Generate()
+    # 24个助记词
+    def generate_address(self):
+        if self.memo:
+            mnemonic_words = self.memo
+        else:
+            mnemonic_words = self.mnemonic.generate(strength=256)
+        # 生成种子
+        seed_bytes = Bip39SeedGenerator(mnemonic_words).Generate()
+        # 生成BIP44对象
+        bip_obj_tron = Bip44.FromSeed(seed_bytes, Bip44Coins.TRON)
+        # 生成私钥
+        private_key_tron = bip_obj_tron.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0).PrivateKey()
+        # 生成波场地址
+        tron_address = bip_obj_tron.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0).PublicKey().ToAddress()
+        return tron_address
 
-# 生成BIP44对象
-bip_obj_tron = Bip44.FromSeed(seed_bytes, Bip44Coins.TRON)
 
-# 生成私钥
-private_key_tron = bip_obj_tron.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0).PrivateKey()
+def USDT_addr():
+    mnemonic_words = "catch shrimp dream peasant stumble unusual pledge pumpkin also unhappy victory slab nose athlete unknown tower grief kitchen jump actor float dog tag kid"
+    btc = BTC_addr(256,memo=mnemonic_words)
+    eth = ETH_addr(256,memo=mnemonic_words)
+    tron = TRON_addr(256,memo=mnemonic_words)
+    return btc.generate_address(),eth.generate_address(),tron.generate_address()
 
-print("TRON Private Key (for TRC20 USDT):", private_key_tron.ToWif())
 
-# 生成波场地址
-tron_address = bip_obj_tron.Purpose().Coin().Account(0).Change(Bip44Changes.CHAIN_EXT).AddressIndex(0).PublicKey().ToAddress()
-
-print("TRON Address (for TRC20 USDT):", tron_address)
 
 
 """
@@ -58,3 +47,14 @@ ETH Address (for ERC20 USDT): 0xd54dE4979E17Accb5e5383f9a507d3c235b4eb9a
 TRON Private Key (for TRC20 USDT): 
 TRON Address (for TRC20 USDT): TQnB3a9kpK2rtARCpGHZp6g6cnLduDBaJo
 """
+
+if __name__ == '__main__':
+    print(USDT_addr())
+    pass
+    mnemonic_words = "catch shrimp dream peasant stumble unusual pledge pumpkin also unhappy victory slab nose athlete unknown tower grief kitchen jump actor float dog tag kid"
+    btc = BTC_addr(256,memo=mnemonic_words)
+    print(btc.generate_address())
+    eth = ETH_addr(256,memo=mnemonic_words)
+    print(eth.generate_address())
+    tron = TRON_addr(256,memo=mnemonic_words)
+    print(tron.generate_address)
