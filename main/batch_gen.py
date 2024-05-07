@@ -9,7 +9,7 @@ from mnemonic import Mnemonic
 #     print('888')
 #     pass
 def batch_gen():
-    path = "K:/ttt.csv"
+    path = "K:/result.csv"
     num = 30000
     with open(path,'w+',encoding='utf-8') as f:
         f.write(','.join(['btc_addrBIP44','btc49_addr','eth_addr','trc20_addr','mnemonic'])+'\n')
