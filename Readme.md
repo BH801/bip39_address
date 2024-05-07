@@ -5,7 +5,7 @@
 usage:
 run the batch_gen.py to generate the address of many coins, and save it to a csv file automatically.
 so that we could check the address if correct and save it to the veracrypt box.
-also it delete the 10 later address in order to avoid the address be used by others.
+also it delete the 10 later address in order to avoid the addr``ess be used by others.
 washed.csv: deleted the mnemonic words and the private key.
 result.csv: the result include the address and mnemonics of the address.
 
