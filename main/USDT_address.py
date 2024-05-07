@@ -1,10 +1,11 @@
-from bip_utils import Bip39SeedGenerator, Bip44, Bip44Coins, Bip44Changes
 from mnemonic import Mnemonic
+from bip_utils import Bip39SeedGenerator, Bip44, Bip44Coins, Bip44Changes
+from BTC_address2BIP49 import BTC_addr49
 # 24个助记词
 from main.BTC_address import BTC_addr
 from main.ETH_address import ETH_addr
+from config import mnemonic_words
 
-from bip_utils import Bip39SeedGenerator, Bip44, Bip44Coins, Bip44Changes
 
 class TRON_addr():
     def __init__(self,length,memo = None,lang = 'english'):
@@ -30,7 +31,6 @@ class TRON_addr():
 
 
 def USDT_addr():
-    mnemonic_words = "catch shrimp dream peasant stumble unusual pledge pumpkin also unhappy victory slab nose athlete unknown tower grief kitchen jump actor float dog tag kid"
     btc = BTC_addr(256,memo=mnemonic_words)
     eth = ETH_addr(256,memo=mnemonic_words)
     tron = TRON_addr(256,memo=mnemonic_words)
@@ -49,12 +49,12 @@ TRON Address (for TRC20 USDT): TQnB3a9kpK2rtARCpGHZp6g6cnLduDBaJo
 """
 
 if __name__ == '__main__':
-    print(USDT_addr())
-    pass
-    mnemonic_words = "catch shrimp dream peasant stumble unusual pledge pumpkin also unhappy victory slab nose athlete unknown tower grief kitchen jump actor float dog tag kid"
+    # print(USDT_addr())
     btc = BTC_addr(256,memo=mnemonic_words)
-    print(btc.generate_address())
+    print('btc address',btc.generate_address())
+    btc49 = BTC_addr49(256,memo=mnemonic_words)
+    print('btc49 address',btc49.generate_address())
     eth = ETH_addr(256,memo=mnemonic_words)
-    print(eth.generate_address())
+    print('eth:',eth.generate_address())
     tron = TRON_addr(256,memo=mnemonic_words)
-    print(tron.generate_address)
+    print('tron',tron.generate_address())

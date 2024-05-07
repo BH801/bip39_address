@@ -8,7 +8,6 @@ from mnemonic import Mnemonic
 # if __name__ == '__main__':
 #     print('888')
 #     pass
-#     mnemonic_words = "catch shrimp dream peasant stumble unusual pledge pumpkin also unhappy victory slab nose athlete unknown tower grief kitchen jump actor float dog tag kid"
 def batch_gen():
     path = "K:/ttt.csv"
     num = 30000

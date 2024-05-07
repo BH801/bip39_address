@@ -24,4 +24,7 @@ _test/
 *.png
 db.sqlite3
 
+pwd.py
+
+
 
